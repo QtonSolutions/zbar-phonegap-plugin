@@ -65,25 +65,29 @@
     self.hasPendingOperation = YES;
     
     self.callbackId = command.callbackId;
-    [self.viewController presentModalViewController: self.reader
-                            animated: YES];
+    [self.viewController presentViewController:reader animated: YES completion:nil];
 
     
     
     // if (!self.reader) {
-    //     self.reader = [ZBarReaderViewController new];
-    //     self.reader.readerDelegate = self;
+         self.reader = [ZBarReaderViewController new];
+         self.reader.readerDelegate = self;
     // }
 
     // disable all symbols - useful to re-enable specific codes only
-    // [reader.scanner setSymbology: 0
-    //      config: ZBAR_CFG_ENABLE
-    //      to: 0];
+    [reader.scanner setSymbology: 0
+          config: ZBAR_CFG_ENABLE
+          to: 0];
 
-    // [reader.scanner setSymbology: ZBAR_QRCODE
-    //             config: ZBAR_CFG_ENABLE
-    //             to: 1];
-
+    [reader.scanner setSymbology: ZBAR_CODE128
+                 config: ZBAR_CFG_ENABLE
+                 to: 1];
+    [reader.scanner setSymbology: ZBAR_CODE93
+                          config: ZBAR_CFG_ENABLE
+                              to: 1];
+    [reader.scanner setSymbology: ZBAR_CODE39
+                          config: ZBAR_CFG_ENABLE
+                              to: 1];
     
     // queue [processor scanBarcode] to run on the event loop
 //    [processor performSelector:@selector(scanBarcode) withObject:nil afterDelay:0];
