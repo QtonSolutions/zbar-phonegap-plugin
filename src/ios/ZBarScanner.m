@@ -35,9 +35,16 @@
 
 - (void)pluginInitialize {
     self.reader = [ZBarReaderViewController new];
-	
-	// Hiding the info button
-	UIView * infoButton = [[[[[reader.view.subviews objectAtIndex:2] subviews] objectAtIndex:0] subviews] objectAtIndex:3];
+
+    NSInteger infoButtonIndex;
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending) {
+        infoButtonIndex = 1;
+    } else {
+        infoButtonIndex = 3;
+    }
+    UIView *infoButton = [[[[[reader.view.subviews objectAtIndex:2] subviews] objectAtIndex:0] subviews] objectAtIndex:infoButtonIndex];
+            [infoButton setHidden:YES];
+
 	[infoButton setHidden:YES];
 	
     self.reader.readerDelegate = self;
